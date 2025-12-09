@@ -1,0 +1,548 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Laboratorio de Métodos y Simulaciones</title>
+<!--   <link rel="icon" type="image/x-icon" href="imagenes/logo.jpeg"> -->
+
+<!-- Bootstrap -->
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+
+<!-- Icons -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
+
+
+  <!-- Tipografía Barabási-like: Inter / Space Grotesk -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&family=Space+Grotesk:wght@400;600&display=swap" rel="stylesheet">
+
+  <style>
+    :root {
+      --bg: #141414;
+      --fg: #ffffff;
+      --accent: #00d4ff;
+      --accent2: #ff0095;
+      --maxw: 1250px;
+    }
+
+    * {margin: 0; padding: 0; box-sizing: border-box;}
+
+    body {
+      background: var(--bg);
+      color: var(--fg);
+      font-family: 'Inter', sans-serif;
+      overflow-x: hidden;
+      font-size: 1.6rem;
+    }
+
+    header {
+      width: 100%;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 25px 40px;
+      position: fixed;
+      top: 0;
+      left: 0;
+      z-index: 1000;
+      backdrop-filter: blur(6px);
+      /* background: rgba(0,0,0,0.35); */
+      background-color: #141414;
+      border-bottom: 1px solid rgba(255,255,255,0.1);
+    }
+
+    header img {
+      height: 85px;
+    }
+
+    nav a {
+      color: var(--fg);
+      margin-left: 25px;
+      text-decoration: none;
+      font-weight: 300;
+      transition: 0.3s;
+      letter-spacing: 0.5px;
+    }
+
+    nav a:hover {
+      color: var(--accent);
+    }
+
+
+    /* HERO */
+    .hero {
+      height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+      position: relative;
+    }
+
+    .hero img {
+      width: 980px;
+      opacity: 0.95;
+    }
+
+    .hero p {
+      font-size: 1.7rem;
+      margin-top: 25px;
+      max-width: 900px;
+      opacity: 0.85;
+    }
+
+    /* SECCIÓN */
+    section {
+      background-color: #141414;
+      width: 100%;
+      max-width: var(--maxw);
+      margin: auto;
+      padding: 120px 40px;
+    }
+
+    h1 {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 4rem;
+      font-weight: 600;
+      margin-bottom: 60px;
+      text-align: center;
+    }
+
+    h1b {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 3.2rem;
+      font-weight: 600;
+      margin-bottom: 80px;
+      text-align: center;
+      line-height: 2.3;
+        }
+
+    .grid-2 {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 60px;
+      align-items: center;
+    }
+
+    .grid-3 {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 45px;
+      margin-top: 90px;
+    }
+
+    .card {
+      background: #141414;
+      padding: 35px;
+      border-radius: 14px;
+      border: 1px solid rgba(255,255,255,0.08);
+      transition: 0.3s;
+      color: var(--fg); /* Añadido: color de texto blanco para toda la card */
+    }
+
+    .card:hover {
+      transform: translateY(-6px);
+      border-color: var(--accent);
+    }
+
+    .card img {width: 100%; border-radius: 10px; margin-bottom: 20px;}
+
+    /* Añadido: asegurar que todos los elementos de texto dentro de la card sean blancos */
+    .card h3,
+    .card p,
+    .card a {
+      color: var(--fg);
+    }
+
+    /* MODIFICADO: Títulos de cards en negrita y tamaño mayor */
+    .card h3 {
+      font-weight: 700; /* Negrita */
+      font-size: 2.2rem; /* Tamaño mayor */
+      margin-bottom: 15px;
+      line-height: 1.3;
+    }
+
+  /* CARDS ESTILO BARABÁSI
+  .card-dark {
+    background-color: var(--bg-card);
+    border: 1px solid #111;
+    border-radius: 12px;
+    padding: 25px;
+    transition: 0.3s;
+  }*/
+  .card-dark:hover {
+    border-color: var(--accent);
+    transform: translateY(-5px);
+  }
+
+  /* IMÁGENES REDONDAS */
+  .rounded-circle {
+    border: 2px solid var(--accent);
+  }
+
+  /* FOOTER */
+  footer {
+    background-color: #141414;
+    border-top: 1px solid var(--accent);
+  }
+
+  footer .nav-link:hover {
+    color: var(--accent) !important;
+  }
+
+  /* ACCENT TEXT */
+  .accent {
+    color: var(--accent);
+  }
+
+  /* BORDER ACCENT - MODIFICADO: eliminado el borde por defecto */
+  .border-accent {
+    /* border: 2px solid var(--accent); */
+  }
+
+  footer {
+      margin-top: 200px;
+      text-align: center;
+      padding: 60px;
+      font-size: 1rem;
+      opacity: 0.6;
+    }
+
+    /* Añadido: estilos para la sección de investigadores */
+    .section-dark {
+      width: 100%;
+      max-width: var(--maxw);
+      margin: auto;
+      padding: 120px 40px;
+    }
+
+    .section-title {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 4rem;
+      font-weight: 600;
+      margin-bottom: 60px;
+      text-align: center;
+    }
+
+    /* AÑADIDO: Espacio entre publicaciones */
+    #Publicaciones ul li {
+      margin-bottom: 25px;
+      line-height: 1.6;
+    }
+
+    #colaboraciones {
+  display: none;
+}
+
+  </style>
+</head>
+
+<body>
+
+<header>
+  <img src="imagenes/logoUTN.png" alt="Logo UTN">
+  <nav>
+    <a href="#Inicio">Inicio</a>
+    <a href="#Nosotros">Sobre nosotros</a>
+    <a href="#QueHacemos">¿Qué hacemos?</a>
+    <a href="#Proyectos">Proyectos</a>
+    <a href="#Publicaciones">Publicaciones</a>
+    <!-- CORREGIDO: Cambiado de #Equipo a #Investigadores -->
+    <a href="#Investigadores">Investigadores</a>
+    <a href="#Contacto">Contacto</a>
+  </nav>
+</header>
+
+<!-- HERO -->
+<div class="hero" id="Inicio">
+  <img src="imagenes/iconos.png" alt="Logo Lab">
+
+  <h1b>Laboratorio de Métodos y Simulaciones Computacionales</h1b>
+   <p>Universidad Tecnológica Nacional – Facultad Regional Rafaela</p>
+</div>
+
+<!-- SOBRE NOSOTROS -->
+<section id="Nosotros">
+  <h1>Sobre nosotros</h1>
+  <div class="grid-2">
+   <!-- <img src="imagenes/facultad.jpeg" class="img-fluid" alt="Facultad"> -->
+   <!-- <img src="imagenes/lab1b.png" class="img-fluid" alt="Facultad">-->
+    <img src="imagenes/lab2.png" class="img-fluid" alt="Facultad">
+    <div>
+      <p>Desde su fundación en 2016, el Laboratorio de Métodos y Simulaciones Computacionales se ha consolidado como un espacio innovador donde convergen investigadores de diversas disciplinas científicas y técnicas.</p>
+      <p>Nos dedicamos al desarrollo de soluciones creativas para desafíos ingenieriles mediante herramientas avanzadas de matemáticas, física y computación.</p>
+    </div>
+  </div>
+</section>
+
+<!-- QUÉ HACEMOS -->
+<section id="QueHacemos">
+  <h1>¿Qué hacemos?</h1>
+  <div class="grid-3">
+    <div class="card">
+      <img src="imagenes/que hacemos1.png" alt="Formación">
+      <h3>Formación de recursos humanos</h3>
+      <p>Alumnos y graduados se incorporan al laboratorio para adquirir técnicas innovadoras.</p>
+    </div>
+
+    <div class="card">
+      <img src="imagenes/que hacemos2.png" alt="Investigación">
+      <h3>Investigación</h3>
+      <p>Integración de modelos teóricos, simulación y optimización.</p>
+    </div>
+
+    <div class="card">
+      <img src="imagenes/que hacemos3.png" alt="Transferencia">
+      <h3>Transferencia</h3>
+      <p>Aplicación directa de tecnología desarrollada en el laboratorio.</p>
+    </div>
+  </div>
+</section>
+
+<!-- PROYECTOS -->
+<section id="Proyectos">
+  <h1>Proyectos</h1>
+  <div class="grid-3">
+    <!-- Aquí irán todas las tarjetas de proyectos, las integraré luego en la iteración completa -->
+       <!-- Project 1 -->
+      <div class="card">
+        <img src="imagenes/redes de distribucion.jpg" alt="Fugas">
+        <h3>Sectorización y reducción de fugas de agua potable</h3>
+        <p>La pérdida de agua potable en los sistemas de suministro urbano es un desafío global. Esta línea busca desarrollar metodologías para reducir fugas mediante la ubicación óptima de dispositivos que modulan la presión.</p>
+        <!-- <a href="proyecto-sectorizacion.html" class="btn btn-outline-light mt-3">Ver más</a>-->
+        <div style="margin-top:12px;"><a href="proyecto-sectorizacion.html" style="font-weight:600; color:var(--accent);">Ver más →</a></div>
+      </div>
+
+      <!-- Project 2 -->
+      <div class="card">
+      <img src="imagenes/recorridos.jpg" alt="Recorridos">
+        <h3>Diseño de recorridos óptimos para transporte de leche</h3>
+        <p>Optimización de rutas para flotas lácteas en condiciones de incertidumbre, reduciendo costos y asegurando calidad del producto.</p>
+        <div style="margin-top:12px;"><a href="proyecto-recorridos.html" style="font-weight:600; color:var(--accent);">Ver más →</a></div>
+      </div>
+
+      <!-- Project 3 -->
+      <div class="card">
+      <img src="imagenes/proyecto2.jpg" alt="Granulares">
+      <h3>Optimización del flujo en materiales granulares</h3>
+      <p>Investigamos cómo las perturbaciones afectan el flujo de materiales granulares mediante simulaciones DEM para mejorar la eficiencia operativa.
+      <div style="margin-top:12px;"><a href="proyecto-particulas.html" style="font-weight:600; color:var(--accent);">Ver más →</a></div>
+      </div>
+
+
+      <!-- Project 4 -->
+      <div class="card">
+      <img src="imagenes/modelo de aprendizaje.jpg" alt="Autoencoders">
+      <h3>Autoencoders convolucionales en sistemas dinámicos</h3>
+      <p>Investigamos el uso de CNN y autoencoders para reducir la dimensionalidad y predecir imágenes en sistemas dinámicos de partículas.
+      <div style="margin-top:12px;"><a href="proyecto-aprendizaje.html" style="font-weight:600; color:var(--accent);">Ver más →</a></div>
+      </div>
+
+       <!-- Project 5 -->
+      <div class="card">
+      <img src="imagenes/microredes.jpg" alt="Microrredes">
+      <h3>Diseño de microredes autosuficientes</h3>
+      <p>Integración de energías renovables y almacenamiento para microredes resilientes y eficientes.
+      <div style="margin-top:12px;"><a href="proyecto-microrredes.html" style="font-weight:600; color:var(--accent);">Ver más →</a></div>
+      </div>
+
+  </div>
+</section>
+
+<!-- COLABORACIONES -->
+<section id="colaboraciones" style="display:none;"> <!-- ESTA DESACTIVADO PARA QUE NO SE MUESTRE -->
+
+<div class="p-4 text-center col-lg-12" id="Colaboraciones"
+     style="background-color:#1a1a1a; border-bottom: 1px solid #444;">
+  <h1 class="fw-normal text-white" style="font-size: 4rem;">Colaboraciones</h1>
+</div>
+
+<div class="container-fluid py-5" style="background-color:#1a1a1a;">
+  <div class="row justify-content-center text-center">
+
+    <!-- AySA -->
+    <div class="col-lg-3 col-md-4 col-sm-6 mb-5">
+      <img src="imagenes/aysa.png" alt="AySA" style="width:180px; height:auto;">
+     <!-- <h4 class="text-white mt-3">AySA</h4> -->
+    </div>
+
+    <!-- Politécnico de Valencia -->
+    <div class="col-lg-3 col-md-4 col-sm-6 mb-5">
+      <img src="imagenes/upv.jpeg" alt="Universitat Politècnica de València"
+           style="width:350px; height:auto;">
+      <!--  <h4 class="text-white mt-3">Universitat Politècnica de València</h4> -->
+    </div>
+
+    <!-- Università degli Studi di Bari -->
+    <div class="col-lg-3 col-md-4 col-sm-6 mb-5">
+      <img src="imagenes/bari.png" alt="Università degli Studi di Bari"
+           style="width:380px; height:auto;">
+      <!--  <h4 class="text-white mt-3">Università degli Studi di Bari</h4> -->
+    </div>
+
+    <!-- UTN Santa Fe -->
+    <div class="col-lg-3 col-md-4 col-sm-6 mb-5">
+      <img src="imagenes/utnsf.jpeg" alt="UTN - Facultad Regional Santa Fe"
+           style="width:380px; height:auto;">
+      <!--  <h4 class="text-white mt-3">UTN – Facultad Regional Santa Fe</h4>-->
+    </div>
+
+  </div>
+</div>
+</section>
+
+
+
+
+<!-- PUBLICACIONES -->
+<section id="Publicaciones">
+  <h1>Publicaciones internacionales</h1>
+       <div style="margin-top:22px;">
+        <ul>
+          <li>Bonetti, C.A., Puccini, G.D., Rodríguez-García, J. & Álvarez-Bel, C. — <em>Design of Self-sufficient Microgrids through Network Segmentation and Integration of Renewable Resources</em> (2025) (submitted).</li>
+          <li>Jappert, S. & Puccini, G.D. — <em>Discrete element method simulations of pearl urea discharge in an asymmetric industrial hopper with insert</em>, Particulate Science and Technology (2025).</li>
+          <li>Denardi, M., Bianchotti, J., Castro-Gama, M. & Puccini, G.D. — <em>Managing Nighttime Pressures for Background Leakages Control in Water Distribution Networks using Simulated Annealing</em>, Journal of Water Resources Planning and Management (2024).</li>
+          <li>Denardi, M., Bianchotti, J., Puccini, G.D. & Castro-Gama, M. — <em>Optimizing Performance of Water Distribution Networks: Sectorization and Pressure Management for Leakage Reduction</em>, Engineering Proceedings (2024).</li>
+          <li>Venier, C.M., Márquez, D.S., Bertone, S.E., Puccini, G.D., Risso, J.M., Nigro, N.M. — <em>Discrete and Continuum Approaches for Modeling Solids Motion Inside a Rotating Drum</em>, Applied Sciences (2021).</li>
+          <li>Bianchotti, J.D., Denardi, M., Castro-Gama, M., Puccini, G.D. — <em>Sectorization for Water Distribution Systems with Multiple Sources</em>, Water (2021).</li>
+          <li>Bonetti, C.A., Bianchotti, J.D., Vega, J.R. & Puccini, G.D. — <em>Optimal Segmentation of Electrical Distribution Networks</em>, IEEE LATAM (2021).</li>
+          <li>Bonetti, C. & Puccini, G. — <em>Optimización de la Confiabilidad del Suministro Eléctrico Mediante la Formación de Microredes</em>, IEEE Xplore (2021).</li>
+          <li>Puccini, G., Blaser, L., Bonetti, C., Butarelli, A. — <em>Robustness-based design of water distribution networks</em>, Water U. Journal (2016).</li>
+        </ul>
+      </div>
+</section>
+
+
+<!-- ============================ -->
+<!--   SECCIÓN: INVESTIGADORES    -->
+<!-- ============================ -->
+
+<!-- MODIFICADO: Añadido id="Investigadores" para que funcione el enlace del menú -->
+<div class="section-dark text-center" id="Investigadores">
+  <h1 class="section-title">Investigadores</h1>
+</div>
+
+<div class="container-fluid section-dark text-center">
+
+  <!-- Director -->
+  <div class="mb-5">
+    <h1 class="fw-light mb-2" style="font-size: 4rem;">Director</h1>
+    <img src="imagenes/Gabriel.jpg" class="rounded-circle mb-3" width="200" height="200">
+    <h3 class="fw-light fs-2 mb-1">Gabriel D. Puccini</h3>
+    <p class="fs-5 mb-0">Doctor en Física</p>
+  </div>
+
+  <div class="col-lg-11 mx-auto">
+    <div class="row justify-content-center">
+
+      <!-- PERSONA -->
+      <div class="col-lg-3 mb-5 text-center card-dark">
+        <img src="imagenes/Sergio.jpeg" class="rounded-circle mb-3" width="200" height="200">
+        <h3 class="fw-light fs-3 mb-1">Sergio Bertone</h3>
+        <p class="fs-5">Ingeniero Electromecánico</p>
+      </div>
+
+      <div class="col-lg-3 mb-5 text-center card-dark">
+        <img src="imagenes/Carlos.jpeg" class="rounded-circle mb-3" width="200" height="200">
+        <h3 class="fw-light fs-3 mb-1">Carlos Bonetti</h3>
+        <p class="fs-5">Doctor en Ingeniería Industrial</p>
+      </div>
+
+      <div class="col-lg-3 mb-5 text-center card-dark">
+        <img src="imagenes/Jeza.jpeg" class="rounded-circle mb-3" width="200" height="200">
+        <h3 class="fw-light fs-3 mb-1">Jezabel Bianchotti</h3>
+        <p class="fs-5">Doctora en Ingeniería Civil</p>
+      </div>
+
+      <div class="col-lg-3 mb-5 text-center card-dark">
+        <img src="imagenes/Meli.jpg" class="rounded-circle mb-3" width="200" height="200">
+        <h3 class="fw-light fs-3 mb-1">Melina Denardi</h3>
+        <p class="fs-5">Becaria doctoral</p>
+      </div>
+
+      <div class="col-lg-3 mb-5 text-center card-dark">
+        <img src="imagenes/Tami2.jpeg" class="rounded-circle mb-3" width="200" height="200">
+        <h3 class="fw-light fs-3 mb-1">Tamara Ghirardotti</h3>
+        <p class="fs-5">Estudiante de Ingeniería Civil</p>
+      </div>
+
+      <div class="col-lg-3 mb-5 text-center card-dark">
+        <img src="imagenes/Mica.jpeg" class="rounded-circle mb-3" width="200" height="200">
+        <h3 class="fw-light fs-3 mb-1">Micaela Fernandez</h3>
+        <p class="fs-5">Estudiante de Ingeniería Civil</p>
+      </div>
+
+      <div class="col-lg-3 mb-5 text-center card-dark">
+        <img src="imagenes/Leo.jpeg" class="rounded-circle mb-3" width="200" height="200">
+        <h3 class="fw-light fs-3 mb-1">Leonardo Chiabrando</h3>
+        <p class="fs-5">Estudiante de Ingeniería Electromecánica</p>
+      </div>
+
+      <div class="col-lg-3 mb-5 text-center card-dark">
+        <img src="imagenes/Ligia.jpeg" class="rounded-circle mb-3" width="200" height="200">
+        <h3 class="fw-light fs-3 mb-1">Ligia Molina</h3>
+        <p class="fs-5">Estudiante de Ingeniería Civil</p>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+
+<!-- ============================ -->
+<!--         CONTACTO             -->
+<!-- ============================ -->
+
+<!-- MODIFICADO: Eliminada la clase border-accent para quitar las líneas horizontales -->
+<div class="section-dark text-center" id="Contacto">
+  <h1 class="fw-light section-title">Contacto</h1>
+
+  <div class="row justify-content-center align-items-center p-4">
+
+    <div class="col-lg-8 text-start">
+      <p><i class="bi bi-telephone accent"></i> <b>Teléfonos</b><br> 03492 432702 / 422880 / 432710</p>
+
+      <p><i class="bi bi-geo-alt accent"></i> <b>Universidad Tecnológica Nacional - Facultad Regional Rafaela</b><br>
+      Acuña 49, 2300 Rafaela, Santa Fe, Argentina</p>
+
+      <p><i class="bi bi-person-fill accent"></i> <b>Director</b><br> Gabriel Puccini</p>
+
+      <p><i class="bi bi-envelope accent"></i> <b>Correo Electrónico</b><br>
+      gabriel.puccini@frra.utn.edu.ar</p>
+    </div>
+
+    <div class="col-lg-4">
+      <div class="d-flex justify-content-center">
+        <iframe height="350" class="m-4"
+        src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d8733.432831551641!2d-61.46676547483512!3d-31.249504364638597!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x95caae59ddea8bad%3A0xacf907f1d169f205!2sUTN%20-%20Facultad%20Regional%20Rafaela%20-%20Casa%20central!5e0!3m2!1ses-419!2sar!4v1730493215892!5m2!1ses-419!2sar"></iframe>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+
+<!-- FOOTER -->
+<footer class="py-3 text-center">
+  <img src="imagenes/iconos.png" height="45px" class="mb-2">
+
+  <ul class="nav justify-content-center border-bottom pb-3 mb-3">
+      <li class="nav-item"><a href="#Inicio" class="nav-link px-2 text-white">Inicio</a></li>
+      <li class="nav-item"><a href="#Nosotros" class="nav-link px-2 text-white">Nosotros</a></li>
+      <li class="nav-item"><a href="#QueHacemos" class="nav-link px-2 text-white">¿Qué hacemos?</a></li>
+      <li class="nav-item"><a href="#Proyectos" class="nav-link px-2 text-white">Proyectos</a></li>
+      <!-- CORREGIDO: Cambiado de #Equipo a #Investigadores -->
+      <li class="nav-item"><a href="#Investigadores" class="nav-link px-2 text-white">Investigadores</a></li>
+      <li class="nav-item"><a href="#Contacto" class="nav-link px-2 text-white">Contacto</a></li>
+  </ul>
+
+  <img src="imagenes/titulo.png" height="45px">
+</footer>
+
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+
+
+</body>
+</html>
