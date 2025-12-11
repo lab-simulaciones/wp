@@ -1,0 +1,936 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Laboratorio de Métodos y Simulaciones</title>
+
+  <!-- Bootstrap -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <!-- Icons -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
+  <!-- Tipografía -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&family=Space+Grotesk:wght@400;600&display=swap" rel="stylesheet">
+
+  <style>
+    :root {
+      --bg: #141414;
+      --fg: #ffffff;
+      --accent: #00d4ff;
+      --accent2: #ff0095;
+      --maxw: 1250px;
+    }
+
+    * {margin: 0; padding: 0; box-sizing: border-box;}
+
+    body {
+      background: var(--bg);
+      color: var(--fg);
+      font-family: 'Inter', sans-serif;
+      overflow-x: hidden;
+      font-size: 1.6rem;
+    }
+
+    /* HEADER - MANTENER ORIGINAL EN PC */
+    header {
+      width: 100%;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 25px 40px;
+      position: fixed;
+      top: 0;
+      left: 0;
+      z-index: 1000;
+      backdrop-filter: blur(6px);
+      background-color: #141414;
+      border-bottom: 1px solid rgba(255,255,255,0.1);
+    }
+
+    header img {
+      height: 85px;
+    }
+
+    nav a {
+      color: var(--fg);
+      margin-left: 25px;
+      text-decoration: none;
+      font-weight: 300;
+      transition: 0.3s;
+      letter-spacing: 0.5px;
+      font-size: 1.6rem;
+    }
+
+    nav a:hover {
+      color: var(--accent);
+    }
+
+    /* HAMBURGUESA - SOLO MOVIL */
+    .hamburger {
+      display: none;
+      width: 32px;
+      height: 26px;
+      flex-direction: column;
+      justify-content: space-between;
+      cursor: pointer;
+      z-index: 1001;
+    }
+
+    .hamburger div {
+      width: 100%;
+      height: 4px;
+      background: #e6e6e6;
+      border-radius: 3px;
+      transition: 0.3s ease;
+    }
+
+    /* MENÚ MÓVIL */
+    .mobile-menu {
+      display: none;
+      flex-direction: column;
+      position: fixed;
+      top: 0;
+      right: 0;
+      height: 100vh;
+      width: 100%;
+      background: rgba(20, 20, 20, 0.98);
+      padding-top: 100px;
+      padding-left: 30px;
+      z-index: 999;
+      backdrop-filter: blur(10px);
+    }
+
+    .mobile-menu a {
+      color: #fff;
+      font-size: 2rem;
+      margin-bottom: 25px;
+      text-decoration: none;
+      transition: 0.3s;
+      padding: 10px 0;
+    }
+
+    .mobile-menu a:hover {
+      color: var(--accent);
+    }
+
+    /* HERO - MANTENER ORIGINAL EN PC */
+    .hero {
+      height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+      position: relative;
+      padding-top: 100px;
+    }
+
+    .hero img {
+      width: 980px;
+      max-width: 90%;
+      opacity: 0.95;
+    }
+
+    h1b {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 3.2rem;
+      font-weight: 600;
+      margin: 40px 0;
+      text-align: center;
+      line-height: 1.4;
+    }
+
+    .hero p {
+      font-size: 1.7rem;
+      margin-top: 25px;
+      max-width: 900px;
+      opacity: 0.85;
+      padding: 0 20px;
+    }
+
+    /* SECCIONES - MANTENER ORIGINAL EN PC */
+    section {
+      background-color: #141414;
+      width: 100%;
+      max-width: var(--maxw);
+      margin: 120px auto;
+      padding: 120px 40px;
+    }
+
+    h1 {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 4rem;
+      font-weight: 600;
+      margin-bottom: 60px;
+      text-align: center;
+    }
+
+    /* GRIDS - MANTENER ORIGINAL EN PC */
+    .grid-2 {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 60px;
+      align-items: center;
+    }
+
+    .grid-3 {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 45px;
+      margin-top: 90px;
+    }
+
+    /* CARDS - MANTENER ORIGINAL EN PC - CORREGIDO PARA IMÁGENES SIN RECORTAR */
+    .card {
+      background: #141414;
+      padding: 35px;
+      border-radius: 14px;
+      border: 1px solid rgba(255,255,255,0.08);
+      transition: 0.3s;
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .card:hover {
+      transform: translateY(-6px);
+      border-color: var(--accent);
+    }
+
+    /* CORREGIDO: Imágenes sin recortar, tamaño original */
+    .card img {
+      width: 100%;
+      border-radius: 10px;
+      margin-bottom: 20px;
+      height: auto; /* Eliminado height fijo */
+      object-fit: cover;  /*Cambiado de cover a contain para no recortar */
+     /* max-height: 400px;  Altura máxima pero sin recortar */
+    }
+
+    .card h3 {
+      font-weight: 700;
+      font-size: 2.2rem;
+      margin-bottom: 15px;
+      line-height: 1.3;
+      color: var(--fg);
+      min-height: 0;
+    }
+
+    .card p {
+      color: var(--fg);
+      font-size: 1.6rem;
+      line-height: 1.5;
+      flex-grow: 1;
+    }
+
+    /* INVESTIGADORES - MANTENER ORIGINAL EN PC */
+    .section-dark {
+      width: 100%;
+      max-width: var(--maxw);
+      margin: 120px auto;
+      padding: 120px 40px;
+      text-align: center;
+    }
+
+    .section-title {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 4rem;
+      font-weight: 600;
+      margin-bottom: 60px;
+      text-align: center;
+    }
+
+    /* DIRECTOR - MANTENER ORIGINAL EN PC */
+    .director-section {
+      margin-bottom: 80px;
+    }
+
+    .director-section h1 {
+      font-size: 4rem;
+      font-weight: 600;
+      margin-bottom: 40px;
+    }
+
+    .director-section img {
+      width: 200px;
+      height: 200px;
+      border-radius: 50%;
+      object-fit: cover;
+      border: 2px solid var(--accent);
+      margin-bottom: 20px;
+      transition: 0.3s; /* Añadido para efecto hover */
+    }
+
+    /* INVESTIGADORES GRID - MANTENER ORIGINAL EN PC */
+    .investigadores-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 40px;
+      margin-top: 40px;
+    }
+
+    .investigador-card {
+      text-align: center;
+      padding: 20px;
+      transition: 0.3s; /* Añadido para efecto hover */
+    }
+
+    .investigador-card:hover {
+      transform: translateY(-5px); /* Efecto hover similar a cards */
+    }
+
+    .investigador-card img {
+      width: 200px;
+      height: 200px;
+      border-radius: 50%;
+      object-fit: cover;
+      border: 2px solid var(--accent);
+      margin-bottom: 15px;
+      transition: 0.3s; /* Añadido para efecto hover */
+    }
+
+    /* Añadido: Efecto hover en imágenes de investigadores */
+    .investigador-card:hover img {
+      border-color: var(--accent); /* Cambia a color secundario al hover */
+      transform: scale(1.05); /* Ligero zoom al hover */
+    }
+
+    .investigador-card h3 {
+      font-size: 2rem;
+      margin-bottom: 10px;
+    }
+
+    .investigador-card p {
+      font-size: 1.6rem;
+    }
+
+    /* PUBLICACIONES */
+    #Publicaciones ul {
+      padding-left: 20px;
+    }
+
+    #Publicaciones ul li {
+      margin-bottom: 25px;
+      line-height: 1.6;
+      font-size: 1.6rem;
+    }
+
+    /* CONTACTO - MANTENER ICONOS CIAN Y TEXTO IZQUIERDA */
+    #Contacto {
+      margin-top: 120px;
+    }
+
+    #Contacto i.bi {
+      color: var(--accent) !important;
+      margin-right: 10px;
+      font-size: 1.8rem;
+    }
+
+    #Contacto p {
+      margin-bottom: 25px;
+      font-size: 1.6rem;
+      text-align: left; /* Asegurado alineación izquierda */
+    }
+
+    /* CORREGIDO: Contenedor de contacto alineado a la izquierda */
+    .contacto-contenido {
+      text-align: left !important;
+    }
+
+    #Contacto iframe {
+      width: 100%;
+      height: 350px;
+      border-radius: 10px;
+    }
+
+    /* FOOTER - CORREGIDO HOVER EN ENLACES */
+    footer {
+      margin-top: 200px;
+      text-align: center;
+      padding: 60px;
+      font-size: 1.6rem;
+      opacity: 0.6;
+      background-color: #141414;
+      border-top: 1px solid rgba(255,255,255,0.1);
+    }
+
+    footer ul {
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+      list-style: none;
+      padding: 0;
+      margin: 20px 0;
+    }
+
+    footer ul li {
+      margin: 0 15px;
+    }
+
+    footer ul li a {
+      color: var(--fg);
+      text-decoration: none;
+      font-size: 1.6rem;
+      transition: color 0.3s; /* Añadido para efecto hover */
+    }
+
+    /* CORREGIDO: Hover en enlaces del footer */
+    footer ul li a:hover {
+      color: var(--accent) !important;
+    }
+
+    /* ============================================
+       RESPONSIVE PARA TABLET (768px - 991px)
+    ============================================ */
+    @media (max-width: 1199px) {
+      .hero img {
+        width: 80%;
+        max-width: 800px;
+      }
+
+      h1b {
+        font-size: 2.8rem;
+      }
+
+      .grid-3 {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 30px;
+      }
+
+      .investigadores-grid {
+        grid-template-columns: repeat(3, 1fr);
+      }
+
+      .investigador-card img {
+        width: 180px;
+        height: 180px;
+      }
+    }
+
+    /* ============================================
+       RESPONSIVE PARA TABLET (768px - 991px)
+    ============================================ */
+    @media (max-width: 991px) {
+      header {
+        padding: 20px;
+      }
+
+      header img {
+        height: 70px;
+      }
+
+      nav {
+        display: none;
+      }
+
+      .hamburger {
+        display: flex;
+      }
+
+      .hero {
+        padding-top: 80px;
+      }
+
+      .hero img {
+        width: 90%;
+        max-width: 600px;
+      }
+
+      h1b {
+        font-size: 2.5rem;
+      }
+
+      .hero p {
+        font-size: 1.6rem;
+      }
+
+      section {
+        margin: 80px auto;
+        padding: 80px 20px;
+      }
+
+      h1 {
+        font-size: 3rem;
+        margin-bottom: 40px;
+      }
+
+      .grid-2 {
+        grid-template-columns: 1fr;
+        gap: 40px;
+      }
+
+      .card {
+        padding: 25px;
+      }
+
+      .card img {
+        max-height: 180px; /* Ajustado para tablet */
+      }
+
+      .card h3 {
+        font-size: 1.9rem;
+      }
+
+      .director-section h1 {
+        font-size: 3rem;
+      }
+
+      .investigadores-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 30px;
+      }
+    }
+
+    /* ============================================
+       RESPONSIVE PARA MÓVIL (menos de 768px)
+    ============================================ */
+    @media (max-width: 767px) {
+      body {
+        font-size: 1.4rem;
+      }
+
+      header {
+        padding: 15px;
+      }
+
+      header img {
+        height: 60px;
+      }
+
+      .hero {
+        padding-top: 60px;
+        height: auto;
+        min-height: 100vh;
+      }
+
+      .hero img {
+        width: 95%;
+        max-width: 500px;
+      }
+
+      h1b {
+        font-size: 2.2rem;
+        margin: 30px 0;
+      }
+
+      .hero p {
+        font-size: 1.4rem;
+      }
+
+      section {
+        margin: 60px auto;
+        padding: 60px 15px;
+      }
+
+      h1 {
+        font-size: 2.5rem;
+        margin-bottom: 30px;
+      }
+
+      .grid-3 {
+        grid-template-columns: 1fr;
+        gap: 25px;
+        margin-top: 40px;
+      }
+
+      .card {
+        padding: 20px;
+      }
+
+      .card img {
+        max-height: 160px; /* Ajustado para móvil */
+      }
+
+      .card h3 {
+        font-size: 1.8rem;
+      }
+
+      .section-dark {
+        margin: 60px auto;
+        padding: 60px 15px;
+      }
+
+      .section-title {
+        font-size: 2.5rem;
+        margin-bottom: 30px;
+      }
+
+      .director-section {
+        margin-bottom: 50px;
+      }
+
+      .director-section h1 {
+        font-size: 2.5rem;
+      }
+
+      .director-section img {
+        width: 150px;
+        height: 150px;
+      }
+
+      .investigadores-grid {
+        grid-template-columns: 1fr;
+        gap: 25px;
+      }
+
+      .investigador-card img {
+        width: 150px;
+        height: 150px;
+      }
+
+      #Publicaciones ul li {
+        font-size: 1.4rem;
+      }
+
+      #Contacto {
+        margin-top: 60px;
+      }
+
+      #Contacto p {
+        font-size: 1.4rem;
+      }
+
+      footer {
+        margin-top: 100px;
+        padding: 40px 20px;
+        font-size: 1.4rem;
+      }
+
+      footer ul li {
+        margin: 5px 10px;
+      }
+
+      footer ul li a {
+        font-size: 1.4rem;
+      }
+    }
+
+    /* ANIMACIONES HAMBURGUESA */
+    .hamburger.open div:nth-child(1) {
+      transform: rotate(45deg) translate(5px, 6px);
+    }
+    .hamburger.open div:nth-child(2) {
+      opacity: 0;
+    }
+    .hamburger.open div:nth-child(3) {
+      transform: rotate(-45deg) translate(6px, -6px);
+    }
+
+    .mobile-menu.show {
+      display: flex;
+    }
+  </style>
+</head>
+
+<body>
+
+<header>
+  <img src="imagenes/logoUTN.png" alt="Logo UTN">
+
+  <!-- Nav Desktop -->
+  <nav>
+    <a href="#Inicio">Inicio</a>
+    <a href="#Nosotros">Sobre nosotros</a>
+    <a href="#QueHacemos">¿Qué hacemos?</a>
+    <a href="#Proyectos">Proyectos</a>
+    <a href="#Publicaciones">Publicaciones</a>
+    <a href="#Investigadores">Investigadores</a>
+    <a href="#Contacto">Contacto</a>
+  </nav>
+
+  <!-- Botón hamburguesa -->
+  <div class="hamburger" onclick="toggleMenu()">
+    <div></div>
+    <div></div>
+    <div></div>
+  </div>
+</header>
+
+<!-- Menú móvil -->
+<div id="mobileMenu" class="mobile-menu">
+  <a href="#Inicio" onclick="closeMenu()">Inicio</a>
+  <a href="#Nosotros" onclick="closeMenu()">Sobre nosotros</a>
+  <a href="#QueHacemos" onclick="closeMenu()">¿Qué hacemos?</a>
+  <a href="#Proyectos" onclick="closeMenu()">Proyectos</a>
+  <a href="#Publicaciones" onclick="closeMenu()">Publicaciones</a>
+  <a href="#Investigadores" onclick="closeMenu()">Investigadores</a>
+  <a href="#Contacto" onclick="closeMenu()">Contacto</a>
+</div>
+
+<!-- HERO -->
+<div class="hero" id="Inicio">
+  <img src="imagenes/iconos.png" alt="Logo Lab">
+  <h1b>Laboratorio de Métodos y Simulaciones Computacionales</h1b>
+  <p>Universidad Tecnológica Nacional – Facultad Regional Rafaela</p>
+</div>
+
+<!-- SOBRE NOSOTROS -->
+<section id="Nosotros">
+  <h1>Sobre nosotros</h1>
+  <div class="grid-2">
+    <img src="imagenes/lab2.png" class="img-fluid rounded" alt="Laboratorio">
+    <div>
+      <p>Desde su fundación en 2016, el Laboratorio de Métodos y Simulaciones Computacionales se ha consolidado como un espacio innovador donde convergen investigadores de diversas disciplinas científicas y técnicas.</p>
+      <p>Nos dedicamos al desarrollo de soluciones creativas para desafíos ingenieriles mediante herramientas avanzadas de matemáticas, física y computación.</p>
+    </div>
+  </div>
+</section>
+
+<!-- QUÉ HACEMOS -->
+<section id="QueHacemos">
+  <h1>¿Qué hacemos?</h1>
+  <div class="grid-3">
+    <div class="card">
+      <img src="imagenes/que hacemos1.png" alt="Formación">
+      <h3>Formación de recursos humanos</h3>
+      <p>Alumnos y graduados se incorporan al laboratorio para adquirir técnicas innovadoras.</p>
+    </div>
+
+    <div class="card">
+      <img src="imagenes/que hacemos2.png" alt="Investigación">
+      <h3>Investigación</h3>
+      <p>Integración de modelos teóricos, simulación y optimización.</p>
+    </div>
+
+    <div class="card">
+      <img src="imagenes/que hacemos3.png" alt="Transferencia">
+      <h3>Transferencia</h3>
+      <p>Aplicación directa de tecnología desarrollada en el laboratorio.</p>
+    </div>
+  </div>
+</section>
+
+<!-- PROYECTOS -->
+<section id="Proyectos">
+  <h1>Proyectos</h1>
+  <div class="grid-3">
+    <div class="card">
+      <img src="imagenes/redes de distribucion.jpg" alt="Fugas">
+      <h3>Sectorización y reducción de fugas de agua potable</h3>
+      <p>La pérdida de agua potable en los sistemas de suministro urbano es un desafío global. Esta línea busca desarrollar metodologías para reducir fugas mediante la ubicación óptima de dispositivos que modulan la presión.</p>
+      <div style="margin-top:12px;"><a href="proyecto-sectorizacion.html" style="font-weight:600; color:var(--accent);">Ver más →</a></div>
+    </div>
+
+    <div class="card">
+      <img src="imagenes/recorridos.jpg" alt="Recorridos">
+      <h3>Diseño de recorridos óptimos para transporte de leche</h3>
+      <p>Optimización de rutas para flotas lácteas en condiciones de incertidumbre, reduciendo costos y asegurando calidad del producto.</p>
+      <div style="margin-top:12px;"><a href="proyecto-recorridos.html" style="font-weight:600; color:var(--accent);">Ver más →</a></div>
+    </div>
+
+    <div class="card">
+      <img src="imagenes/proyecto2.jpg" alt="Granulares">
+      <h3>Optimización del flujo en materiales granulares</h3>
+      <p>Investigamos cómo las perturbaciones afectan el flujo de materiales granulares mediante simulaciones DEM para mejorar la eficiencia operativa.</p>
+      <div style="margin-top:12px;"><a href="proyecto-particulas.html" style="font-weight:600; color:var(--accent);">Ver más →</a></div>
+    </div>
+
+    <div class="card">
+      <img src="imagenes/modelo de aprendizaje.jpg" alt="Autoencoders">
+      <h3>Autoencoders convolucionales en sistemas dinámicos</h3>
+      <p>Investigamos el uso de CNN y autoencoders para reducir la dimensionalidad y predecir imágenes en sistemas dinámicos de partículas.</p>
+      <div style="margin-top:12px;"><a href="proyecto-aprendizaje.html" style="font-weight:600; color:var(--accent);">Ver más →</a></div>
+    </div>
+
+    <div class="card">
+      <img src="imagenes/microredes.jpg" alt="Microrredes">
+      <h3>Diseño de microredes autosuficientes</h3>
+      <p>Integración de energías renovables y almacenamiento para microredes resilientes y eficientes.</p>
+      <div style="margin-top:12px;"><a href="proyecto-microrredes.html" style="font-weight:600; color:var(--accent);">Ver más →</a></div>
+    </div>
+  </div>
+</section>
+
+<!-- PUBLICACIONES -->
+<section id="Publicaciones">
+  <h1>Publicaciones internacionales</h1>
+  <div style="margin-top:22px;">
+    <ul>
+      <li>Bonetti, C.A., Puccini, G.D., Rodríguez-García, J. & Álvarez-Bel, C. — <em>Design of Self-sufficient Microgrids through Network Segmentation and Integration of Renewable Resources</em> (2025) (submitted).</li>
+      <li>Jappert, S. & Puccini, G.D. — <em>Discrete element method simulations of pearl urea discharge in an asymmetric industrial hopper with insert</em>, Particulate Science and Technology (2025).</li>
+      <li>Denardi, M., Bianchotti, J., Castro-Gama, M. & Puccini, G.D. — <em>Managing Nighttime Pressures for Background Leakages Control in Water Distribution Networks using Simulated Annealing</em>, Journal of Water Resources Planning and Management (2024).</li>
+      <li>Denardi, M., Bianchotti, J., Puccini, G.D. & Castro-Gama, M. — <em>Optimizing Performance of Water Distribution Networks: Sectorization and Pressure Management for Leakage Reduction</em>, Engineering Proceedings (2024).</li>
+      <li>Venier, C.M., Márquez, D.S., Bertone, S.E., Puccini, G.D., Risso, J.M., Nigro, N.M. — <em>Discrete and Continuum Approaches for Modeling Solids Motion Inside a Rotating Drum</em>, Applied Sciences (2021).</li>
+      <li>Bianchotti, J.D., Denardi, M., Castro-Gama, M., Puccini, G.D. — <em>Sectorization for Water Distribution Systems with Multiple Sources</em>, Water (2021).</li>
+      <li>Bonetti, C.A., Bianchotti, J.D., Vega, J.R. & Puccini, G.D. — <em>Optimal Segmentation of Electrical Distribution Networks</em>, IEEE LATAM (2021).</li>
+      <li>Bonetti, C. & Puccini, G. — <em>Optimización de la Confiabilidad del Suministro Eléctrico Mediante la Formación de Microredes</em>, IEEE Xplore (2021).</li>
+      <li>Puccini, G., Blaser, L., Bonetti, C., Butarelli, A. — <em>Robustness-based design of water distribution networks</em>, Water U. Journal (2016).</li>
+    </ul>
+  </div>
+</section>
+
+<!-- INVESTIGADORES -->
+<div class="section-dark" id="Investigadores">
+  <h1 class="section-title">Investigadores</h1>
+
+  <div class="director-section">
+    <h1>Director</h1>
+    <div class="investigador-card">
+    <img src="imagenes/Gabriel.jpg" alt="Gabriel Puccini">
+    <h3>Gabriel D. Puccini</h3>
+    <p>Doctor en Física</p>
+  </div>
+
+  <div class="investigadores-grid">
+    <div class="investigador-card">
+      <img src="imagenes/Sergio.jpeg" alt="Sergio Bertone">
+      <h3>Sergio Bertone</h3>
+      <p>Ingeniero Electromecánico</p>
+    </div>
+
+    <div class="investigador-card">
+      <img src="imagenes/Carlos.jpeg" alt="Carlos Bonetti">
+      <h3>Carlos Bonetti</h3>
+      <p>Doctor en Ingeniería Industrial</p>
+    </div>
+
+    <div class="investigador-card">
+      <img src="imagenes/Jeza.jpeg" alt="Jezabel Bianchotti">
+      <h3>Jezabel Bianchotti</h3>
+      <p>Doctora en Ingeniería Civil</p>
+    </div>
+
+    <div class="investigador-card">
+      <img src="imagenes/Meli.jpg" alt="Melina Denardi">
+      <h3>Melina Denardi</h3>
+      <p>Becaria doctoral</p>
+    </div>
+
+    <div class="investigador-card">
+      <img src="imagenes/Tami2.jpeg" alt="Tamara Ghirardotti">
+      <h3>Tamara Ghirardotti</h3>
+      <p>Estudiante de Ingeniería Civil</p>
+    </div>
+
+    <div class="investigador-card">
+      <img src="imagenes/Mica.jpeg" alt="Micaela Fernandez">
+      <h3>Micaela Fernandez</h3>
+      <p>Estudiante de Ingeniería Civil</p>
+    </div>
+
+    <div class="investigador-card">
+      <img src="imagenes/Leo.jpeg" alt="Leonardo Chiabrando">
+      <h3>Leonardo Chiabrando</h3>
+      <p>Estudiante de Ingeniería Electromecánica</p>
+    </div>
+
+    <div class="investigador-card">
+      <img src="imagenes/Ligia.jpeg" alt="Ligia Molina">
+      <h3>Ligia Molina</h3>
+      <p>Estudiante de Ingeniería Civil</p>
+    </div>
+  </div>
+</div>
+
+<!-- CONTACTO -->
+<div class="section-dark" id="Contacto">
+  <h1 class="section-title">Contacto</h1>
+
+  <div style="max-width: var(--maxw); margin: 0 auto; padding: 0 40px;">
+    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 60px; align-items: start;">
+      <div class="contacto-contenido">
+        <p><i class="bi bi-telephone"></i> <b>Teléfonos</b><br> 03492 432702 / 422880 / 432710</p>
+
+        <p><i class="bi bi-geo-alt"></i> <b>Universidad Tecnológica Nacional - Facultad Regional Rafaela</b><br>
+        Acuña 49, 2300 Rafaela, Santa Fe, Argentina</p>
+
+        <p><i class="bi bi-person-fill"></i> <b>Director</b><br> Gabriel Puccini</p>
+
+        <p><i class="bi bi-envelope"></i> <b>Correo Electrónico</b><br>
+        gabriel.puccini@frra.utn.edu.ar</p>
+      </div>
+
+      <div>
+        <iframe
+          src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d8733.432831551641!2d-61.46676547483512!3d-31.249504364638597!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x95caae59ddea8bad%3A0xacf907f1d169f205!2sUTN%20-%20Facultad%20Regional%20Rafaela%20-%20Casa%20central!5e0!3m2!1ses-419!2sar!4v1730493215892!5m2!1ses-419!2sar"></iframe>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- FOOTER -->
+<footer>
+  <img src="imagenes/iconos.png" height="45px" class="mb-2">
+
+  <ul>
+    <li><a href="#Inicio">Inicio</a></li>
+    <li><a href="#Nosotros">Nosotros</a></li>
+    <li><a href="#QueHacemos">¿Qué hacemos?</a></li>
+    <li><a href="#Proyectos">Proyectos</a></li>
+    <li><a href="#Investigadores">Investigadores</a></li>
+    <li><a href="#Contacto">Contacto</a></li>
+  </ul>
+
+  <img src="imagenes/titulo.png" height="45px" style="margin-top: 20px;">
+</footer>
+
+<script>
+function toggleMenu() {
+  const menu = document.getElementById("mobileMenu");
+  const burger = document.querySelector(".hamburger");
+
+  menu.classList.toggle("show");
+  burger.classList.toggle("open");
+}
+
+function closeMenu() {
+  const menu = document.getElementById("mobileMenu");
+  const burger = document.querySelector(".hamburger");
+
+  menu.classList.remove("show");
+  burger.classList.remove("open");
+}
+
+// Cerrar menú al hacer clic fuera
+document.addEventListener('click', function(event) {
+  const menu = document.getElementById('mobileMenu');
+  const burger = document.querySelector('.hamburger');
+  const isClickInsideMenu = menu.contains(event.target);
+  const isClickOnBurger = burger.contains(event.target);
+
+  if (!isClickInsideMenu && !isClickOnBurger && menu.classList.contains('show')) {
+    closeMenu();
+  }
+});
+
+// Scroll suave para enlaces internos
+document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+  anchor.addEventListener('click', function(e) {
+    if(this.getAttribute('href') === '#') return;
+
+    e.preventDefault();
+    const targetId = this.getAttribute('href');
+    const targetElement = document.querySelector(targetId);
+
+    if (targetElement) {
+      // Cerrar menú móvil si está abierto
+      if (window.innerWidth <= 991) {
+        closeMenu();
+      }
+
+      window.scrollTo({
+        top: targetElement.offsetTop - 100,
+        behavior: 'smooth'
+      });
+    }
+  });
+});
+
+// Ajustar scroll para que las secciones no queden tapadas por el header
+window.addEventListener('hashchange', function() {
+  if (window.location.hash) {
+    const element = document.querySelector(window.location.hash);
+    if (element) {
+      setTimeout(() => {
+        window.scrollTo({
+          top: element.offsetTop - 100,
+          behavior: 'smooth'
+        });
+      }, 100);
+    }
+  }
+});
+</script>
+
+</body>
+</html>
